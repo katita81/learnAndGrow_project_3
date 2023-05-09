@@ -3,22 +3,22 @@ import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 
 import { ADD_REVIEW } from '../../utils/mutations';
-import { QUERY_reviews, QUERY_ME } from '../../utils/queries';
+import { QUERY_REVIEWS, QUERY_ME } from '../../utils/queries';
 
 import Auth from '../../utils/auth';
 
 const ReviewForm = () => {
-    const [reviewText, setreviewText] = useState('');
+    const [reviewText, setReviewText] = useState('');
 
     const [characterCount, setCharacterCount] = useState(0);
 
     const [addReview, { error }] = useMutation(ADD_REVIEW, {
         update(cache, { data: { addReview } }) {
             try {
-                const { reviews } = cache.readQuery({ query: QUERY_reviews });
+                const { reviews } = cache.readQuery({ query: QUERY_REVIEWS });
 
                 cache.writeQuery({
-                    query: QUERY_reviews,
+                    query: QUERY_REVIEWS,
                     data: { reviews: [addReview, ...reviews] },
                 });
             } catch (e) {
@@ -45,7 +45,7 @@ const ReviewForm = () => {
                 },
             });
 
-            setreviewText('');
+            setReviewText('');
         } catch (err) {
             console.error(err);
         }
@@ -55,7 +55,7 @@ const ReviewForm = () => {
         const { name, value } = event.target;
 
         if (name === 'reviewText' && value.length <= 280) {
-            setreviewText(value);
+            setReviewText(value);
             setCharacterCount(value.length);
         }
     };

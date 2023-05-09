@@ -10,11 +10,11 @@ const resolvers = {
         user: async (parent, { username }) => {
             return User.findOne({ username }).populate('reviews');
         },
-        thoughts: async (parent, { username }) => {
+        reviews: async (parent, { username }) => {
             const params = username ? { username } : {};
-            return Thought.find(params).sort({ createdAt: -1 });
+            return Review.find(params).sort({ createdAt: -1 });
         },
-        thought: async (parent, { reviewId }) => {
+        review: async (parent, { reviewId }) => {
             return Review.findOne({ _id: reviewId });
         },
         me: async (parent, args, context) => {
@@ -48,7 +48,7 @@ const resolvers = {
 
             return { token, user };
         },
-        addThought: async (parent, { reviewText }, context) => {
+        addReview: async (parent, { reviewText }, context) => {
             if (context.user) {
                 const review = await Review.create({
                     reviewText,
@@ -81,7 +81,7 @@ const resolvers = {
             }
             throw new AuthenticationError('You need to be logged in!');
         },
-        removeThought: async (parent, {reviewId }, context) => {
+        removeReview: async (parent, {reviewId }, context) => {
             if (context.user) {
                 const review = await Review.findOneAndDelete({
                     _id: reviewId,
