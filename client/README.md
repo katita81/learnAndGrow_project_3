@@ -6,5 +6,3 @@ Users can read the reviews and add comments to them.
 
 When the application runs. It prompts the user to log in or 
 sign up. Once the user is authenticated. they can create reviews, modify or delete their reviews or comments.
-
-
